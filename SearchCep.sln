@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerachCep.Api", "SearchCep.Api\SerachCep.Api.csproj", "{E38EDFA9-6E1B-4282-9758-A492E981E6F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerachCep.Api", "Cep.Api\Cep.Api.csproj", "{E38EDFA9-6E1B-4282-9758-A492E981E6F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchCep.Domain", "SearchCep.Domain\SearchCep.Domain.csproj", "{914250FC-5218-4D54-B034-853E9EA78148}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cep.Domain", "Cep.Domain\Cep.Domain.csproj", "{914250FC-5218-4D54-B034-853E9EA78148}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchCep.Infra", "SearchCep.Infra\SearchCep.Infra.csproj", "{C12A428E-4703-481E-A70F-24587C0760CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cep.Infra", "Cep.Infra\Cep.Infra.csproj", "{C12A428E-4703-481E-A70F-24587C0760CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchCep.Service", "SearchCep.Service\SearchCep.Service.csproj", "{8C55D4B5-64A8-46CD-9BB2-D3D0B7501C58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cep.Service", "Cep.Service\Cep.Service.csproj", "{8C55D4B5-64A8-46CD-9BB2-D3D0B7501C58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SearchCep.Tests", "SearchCep.Tests\SearchCep.Tests.csproj", "{EE1A26DC-5EAC-434B-BBA0-A48AB895CE58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cep.Tests", "Cep.Tests\Cep.Tests.csproj", "{EE1A26DC-5EAC-434B-BBA0-A48AB895CE58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
