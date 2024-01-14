@@ -1,4 +1,5 @@
 using Cep.Domain.Dtos.Address;
+using Cep.Domain.Dtos.State;
 using Cep.Domain.Interfaces.Gateway;
 using Cep.Domain.Interfaces.Repository;
 using Cep.Domain.Interfaces.Service;
@@ -27,17 +28,28 @@ namespace Cep.Service.Service
         public async Task<AddressResponseDto> GetCep(string cep)
         {
             var streetDbCep = await _repoStreet.GetByCepAsync(cep.Replace("-", ""));
-            if(streetDbCep != null)
+            if(streetDbCep != null && streetDbCep.LastUpdate.AddMonths(3) > DateTime.Now)
             {
                 return new AddressResponseDto()
                 {
-                City = streetDbCep.Neighborhood.City.Name,
-                State = streetDbCep.Neighborhood.City.State.Name,
-                Neighborhood = streetDbCep.Neighborhood.Name,
-                Street = streetDbCep.Name,
-                Cep = streetDbCep.Cep,
+                    City = streetDbCep.Neighborhood.City.Name,
+                    CityId = streetDbCep.Neighborhood.City.Id,
+                    State = streetDbCep.Neighborhood.City.State.Name,
+                    StateId = streetDbCep.Neighborhood.City.State.Id,
+                    Neighborhood = streetDbCep.Neighborhood.Name,
+                    NeighborhoodId = streetDbCep.Neighborhood.Id,
+                    Street = streetDbCep.Name,
+                    StreetId = streetDbCep.Id,
+                    Cep = streetDbCep.Cep,
+                    LastUpdate = streetDbCep.LastUpdate
                 };
             }
+
+            if(streetDbCep != null && streetDbCep.LastUpdate.AddMonths(3) < DateTime.Now)
+            {
+                await _repoStreet.DelteAsync(streetDbCep.Id);
+            }
+            
 
             var objAddress = MapperTo(await _gateway.ResponseAddressByCep(cep));
             var stateDb = await _repoState.GetByNameAsync(objAddress.State);
@@ -55,7 +67,7 @@ namespace Cep.Service.Service
                 neighborhoodDb = await _repoNeighborhood.InsertAsync(new Neighborhood(objAddress.Neighborhood, cityDb.Id));
             
             if(streetDb == null)
-                streetDb = await _repoStreet.InsertAsync(new Street(objAddress.Street, objAddress.Cep, neighborhoodDb.Id));
+                streetDb = await _repoStreet.InsertAsync(new Street(objAddress.Street, objAddress.Cep, neighborhoodDb.Id, DateTime.Now));
                 
 
 
@@ -64,6 +76,7 @@ namespace Cep.Service.Service
             objAddress.NeighborhoodId = neighborhoodDb.Id;
             objAddress.StreetId = streetDb.Id;
             objAddress.Cep = streetDb.Cep;
+            objAddress.LastUpdate = streetDb.LastUpdate;
 
             return objAddress;
         }
@@ -97,5 +110,22 @@ namespace Cep.Service.Service
                 Cep = response.Cep,
             };
         }
+
+        // private async Task<AddressResponseDto> ValidCepDb(string cep, IStreetRepository repoStreet)
+        // {
+        //     var streetDbCep = await repoStreet.GetByCepAsync(cep.Replace("-", ""));
+        //     if(streetDbCep != null)
+        //     {
+        //         return new AddressResponseDto()
+        //         {
+        //             City = streetDbCep.Neighborhood.City.Name,
+        //             State = streetDbCep.Neighborhood.City.State.Name,
+        //             Neighborhood = streetDbCep.Neighborhood.Name,
+        //             Street = streetDbCep.Name,
+        //             Cep = streetDbCep.Cep,
+        //         };
+        //     }
+            
+        // }
     }
 }

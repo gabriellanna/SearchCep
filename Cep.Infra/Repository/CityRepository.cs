@@ -15,5 +15,10 @@ namespace Cep.Infra.Repository
             var cityDb = await _dataSet.FirstOrDefaultAsync(city => city.Name == name);
             return cityDb;
         }
+
+        public Task<IList<City>> GetCitiesByState(string state)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -16,7 +16,8 @@ namespace Cep.Infra.Repository
         }
         public async Task<IList<State>> GetAllStateAsync()
         {
-            return await _dataSet.Include(state => state.Cities).ToListAsync();
+            var listState = await _dataSet.ToListAsync();
+            return listState;
         }
     }
 }

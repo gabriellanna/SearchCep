@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Cep.Domain.Dtos.Address;
 using Cep.Domain.Interfaces.Service;
 using Cep.Domain.ViewModel;
+using Cep.Domain.Models;
 
 namespace Cep.Api.Controllers
 {
@@ -22,6 +23,19 @@ namespace Cep.Api.Controllers
             try
             {
                 return Ok(new ResponseViewModel(true, null, await _service.GetCep(cep)));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseViewModel(false, ex.Message, null));
+            }
+        }
+
+        [HttpGet("GetAllState")]
+        public async Task<ActionResult<IList<State>>> GetAllStateAsync()
+        {
+            try
+            {
+                return Ok(new ResponseViewModel<IList<State>>(true, null, await _service.GetAllState()));
             }
             catch (Exception ex)
             {
