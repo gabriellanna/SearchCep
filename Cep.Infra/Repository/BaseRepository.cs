@@ -64,7 +64,8 @@ namespace Cep.Infra.Repository
         {
             try
             {
-                _dataSet.Update(item);
+                var itemDb = await _dataSet.FirstOrDefaultAsync(entity => entity.Id == item.Id);
+                _dataSet.Entry(itemDb).CurrentValues.SetValues(item);
                 await _context.SaveChangesAsync();
 
                 return item;

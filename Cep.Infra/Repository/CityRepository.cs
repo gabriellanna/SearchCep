@@ -10,15 +10,15 @@ namespace Cep.Infra.Repository
         public CityRepository(CepContext options) : base(options)
         {
         }
-        public async Task<City> GetByNameAsync(string name)
+        public async Task<City> GetByNameAsync(string name, string stateName)
         {
-            var cityDb = await _dataSet.FirstOrDefaultAsync(city => city.Name == name);
+            var cityDb = await _dataSet.Include(x => x.State).FirstOrDefaultAsync(city => city.Name == name && city.State.Name == stateName);
             return cityDb;
         }
 
-        public Task<IList<City>> GetCitiesByState(string state)
+        public async Task<IList<City>> GetCitiesByStateId(int stateId)
         {
-            throw new NotImplementedException();
+            return await _dataSet.Where(x => x.StateId == stateId).ToListAsync();
         }
     }
 }
